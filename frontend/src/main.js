@@ -48,8 +48,11 @@ const md = markdownit(
 const plainText = document.getElementById("plainText");
 const mdContainer = document.getElementById("mdContainer");
 const mdText = document.getElementById("mdText");
+const convertButton = document.getElementById("convertBtn");
 const copyButton = document.getElementById("copyBtn");   
-const copyStatus = document.getElementById("copyStatus"); 
+const copyStatus = document.getElementById("copyStatus");
+const clearButton = document.getElementById("clearBtn");
+const clearStatus = document.getElementById("clearStatus"); 
 const saveButton = document.getElementById("saveBtn");
 const openButton = document.getElementById("openBtn");
 
@@ -94,6 +97,24 @@ copyButton.addEventListener("click", async () => {
     }
 });
 
+clearButton.addEventListener("click", () =>{
+    try {
+        plainText.innerText = "";
+        autoConvert();
+
+        clearStatus.classList.remove("opacity-0", "-translate-y-2");
+        clearStatus.classList.add("opacity-100", "translate-y-0");
+
+        setTimeout(() => {
+            clearStatus.classList.remove("opacity-100", "translate-y-0");
+            clearStatus.classList.add("opacity-0", "-translate-y-2");
+        }, 2000);
+    } catch (err) {
+        console.error("Failed to copy text:", err);
+        alert("Failed to copy text.");
+    }
+});
+
 saveButton.addEventListener("click", async () =>{
     await SaveMdFile(plainText.innerText);
 });
@@ -129,7 +150,7 @@ function convertToMd(){
     console.log(htmlOutput);
     mdText.innerHTML = htmlOutput;
 }
-document.getElementById("convertBtn").addEventListener("click", convertToMd);
+convertButton.addEventListener("click", convertToMd);
 
 
 // Sync scroll
