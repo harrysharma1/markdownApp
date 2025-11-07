@@ -1,4 +1,5 @@
-import {BrowserOpenURL} from "../wailsjs/runtime/runtime.js";
+import { BrowserOpenURL } from "../wailsjs/runtime/runtime.js";
+import { SaveMdFile } from "../wailsjs/go/main/App.js";
 import markdownit from "markdown-it";
 import markdownItFootnote from "markdown-it-footnote";
 import markdownitSup from "markdown-it-sup";
@@ -7,7 +8,7 @@ import markdownitMark from "markdown-it-mark"
 import markdownitDeflist from "markdown-it-deflist";
 import markdownitIns from "markdown-it-ins";
 import markdownitAbbr from "markdown-it-abbr";
-import {full as emoji} from "markdown-it-emoji";
+import { full as emoji } from "markdown-it-emoji";
 import hljs from "highlight.js"
 import "highlight.js/styles/nord.css";
 
@@ -46,8 +47,9 @@ const md = markdownit(
 const plainText = document.getElementById("plainText");
 const mdContainer = document.getElementById("mdContainer");
 const mdText = document.getElementById("mdText");
-const copyButton = document.getElementById('copyBtn');   
-const copyStatus = document.getElementById('copyStatus'); 
+const copyButton = document.getElementById("copyBtn");   
+const copyStatus = document.getElementById("copyStatus"); 
+const saveButton = document.getElementById("saveBtn");
 
 // Event listeners
 document.addEventListener("click", (event)=>{
@@ -73,22 +75,27 @@ plainText.addEventListener("keydown", (event) =>{
     }
 });
 
-copyButton.addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(plainText.innerText);
+copyButton.addEventListener("click", async () => {
+    try {
+        await navigator.clipboard.writeText(plainText.innerText);
 
-    copyStatus.classList.remove('opacity-0', '-translate-y-2');
-    copyStatus.classList.add('opacity-100', 'translate-y-0');
+        copyStatus.classList.remove("opacity-0", "-translate-y-2");
+        copyStatus.classList.add("opacity-100", "translate-y-0");
 
-    setTimeout(() => {
-      copyStatus.classList.remove('opacity-100', 'translate-y-0');
-      copyStatus.classList.add('opacity-0', '-translate-y-2');
-    }, 2000);
-  } catch (err) {
-    console.error('Failed to copy text:', err);
-    alert('Failed to copy text.');
-  }
+        setTimeout(() => {
+            copyStatus.classList.remove("opacity-100", "translate-y-0");
+            copyStatus.classList.add("opacity-0", "-translate-y-2");
+        }, 2000);
+    } catch (err) {
+        console.error("Failed to copy text:", err);
+        alert("Failed to copy text.");
+    }
 });
+
+saveButton.addEventListener("click", async () =>{
+    await SaveMdFile(plainText.innerText);
+});
+
 
 
 // Auto Conversion
