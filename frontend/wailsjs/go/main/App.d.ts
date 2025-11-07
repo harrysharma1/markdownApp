@@ -3,4 +3,6 @@
 
 export function Greet(arg1:string):Promise<string>;
 
+export function OpenMdFile():Promise<string>;
+
 export function SaveMdFile(arg1:string):Promise<void>;

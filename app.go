@@ -40,6 +40,28 @@ func (a *App) SaveMdFile(content string) error {
 	return os.WriteFile(filepath, []byte(content), 0644)
 }
 
+func (a *App) OpenMdFile() (string, error) {
+	filepath, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select Markdown File",
+		Filters: []runtime.FileFilter{
+			{DisplayName: "Markdown (*.md)", Pattern: "*.md"},
+		},
+	})
+	if err != nil {
+		return "", err
+	}
+	if filepath == "" {
+		return "", err
+	}
+
+	content, err := os.ReadFile(filepath)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
+
+}
+
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)

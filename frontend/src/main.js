@@ -1,5 +1,6 @@
 import { BrowserOpenURL } from "../wailsjs/runtime/runtime.js";
 import { SaveMdFile } from "../wailsjs/go/main/App.js";
+import { OpenMdFile } from "../wailsjs/go/main/App.js";
 import markdownit from "markdown-it";
 import markdownItFootnote from "markdown-it-footnote";
 import markdownitSup from "markdown-it-sup";
@@ -50,6 +51,7 @@ const mdText = document.getElementById("mdText");
 const copyButton = document.getElementById("copyBtn");   
 const copyStatus = document.getElementById("copyStatus"); 
 const saveButton = document.getElementById("saveBtn");
+const openButton = document.getElementById("openBtn");
 
 // Event listeners
 document.addEventListener("click", (event)=>{
@@ -94,6 +96,12 @@ copyButton.addEventListener("click", async () => {
 
 saveButton.addEventListener("click", async () =>{
     await SaveMdFile(plainText.innerText);
+});
+
+openButton.addEventListener("click", async () =>{
+    const file = await OpenMdFile();
+    plainText.innerText = file;
+    autoConvert();
 });
 
 
