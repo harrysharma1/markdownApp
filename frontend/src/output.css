@@ -187,6 +187,9 @@
   .m-0 {
     margin: calc(var(--spacing) * 0);
   }
+  .mx-auto {
+    margin-inline: auto;
+  }
   .prose {
     color: var(--tw-prose-body);
     max-width: 65ch;
@@ -668,14 +671,17 @@
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
-  .p-5 {
-    padding: calc(var(--spacing) * 5);
+  .p-7 {
+    padding: calc(var(--spacing) * 7);
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
+  }
+  .pb-1 {
+    padding-bottom: calc(var(--spacing) * 1);
   }
   .font-mono {
     font-family: var(--font-mono);

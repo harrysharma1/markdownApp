@@ -23,7 +23,7 @@ func main() {
 		Height: 768,
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: true,
+				TitlebarAppearsTransparent: false,
 				FullSizeContent:            true,
 				HideToolbarSeparator:       true,
 			},
