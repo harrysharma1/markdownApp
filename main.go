@@ -27,7 +27,10 @@ func main() {
 				FullSizeContent:            true,
 				HideToolbarSeparator:       true,
 			},
+			WebviewIsTransparent: true,
+			WindowIsTranslucent:  true,
 		},
+
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
