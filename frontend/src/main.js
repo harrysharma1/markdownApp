@@ -9,7 +9,7 @@ import markdownitIns from "markdown-it-ins";
 import markdownitAbbr from "markdown-it-abbr";
 import {full as emoji} from "markdown-it-emoji";
 import hljs from "highlight.js"
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/nord.css";
 
 // Set up global variables
 const md = markdownit(
@@ -44,7 +44,10 @@ const md = markdownit(
     .use(markdownitDeflist)
     .use(markdownitAbbr);
 const plainText = document.getElementById("plainText");
+const mdContainer = document.getElementById("mdContainer");
 const mdText = document.getElementById("mdText");
+const copyButton = document.getElementById('copyBtn');   
+const copyStatus = document.getElementById('copyStatus'); 
 
 // Event listeners
 document.addEventListener("click", (event)=>{
@@ -70,6 +73,24 @@ plainText.addEventListener("keydown", (event) =>{
     }
 });
 
+copyButton.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(plainText.innerText);
+
+    copyStatus.classList.remove('opacity-0', '-translate-y-2');
+    copyStatus.classList.add('opacity-100', 'translate-y-0');
+
+    setTimeout(() => {
+      copyStatus.classList.remove('opacity-100', 'translate-y-0');
+      copyStatus.classList.add('opacity-0', '-translate-y-2');
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy text:', err);
+    alert('Failed to copy text.');
+  }
+});
+
+
 // Auto Conversion
 function debounce(fn, delay=200){
     let timeout;
@@ -94,3 +115,25 @@ function convertToMd(){
     mdText.innerHTML = htmlOutput;
 }
 document.getElementById("convertBtn").addEventListener("click", convertToMd);
+
+
+// Sync scroll
+let isSyncingScroll = false;
+
+function syncScroll(src, target) {
+    if (isSyncingScroll) return;
+
+    isSyncingScroll = true;
+
+    const scrollTopRatio = src.scrollTop / (src.scrollHeight - src.clientHeight);
+    const scrollLeftRatio = src.scrollLeft / (src.scrollWidth - src.clientWidth);
+
+    target.scrollTop = scrollTopRatio * (target.scrollHeight - target.clientHeight);
+    target.scrollLeft = scrollLeftRatio * (target.scrollWidth - target.clientWidth);
+
+    setTimeout(() => { isSyncingScroll = false; }, 50);
+
+}
+
+plainText.addEventListener("scroll", () => syncScroll(plainText, mdContainer));
+mdContainer.addEventListener("scroll", () => syncScroll(mdContainer, plainText));

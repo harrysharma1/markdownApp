@@ -6,19 +6,32 @@
     <link href="./src/output.css" rel="stylesheet">
     <title>markdownApp</title>
 </head>
-<body>
+<body class="relative">
+<span 
+    id="copyStatus" 
+    class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-md font-medium z-50 opacity-0 -translate-y-2 transition-all duration-300">
+    Copied Markdown!
+</span>
 <div class="bg-gray-400 p-5 h-screen flex flex-col gap-2">
     <div class="flex flex-col gap-3 flex-1 min-h-0">
         <div class="flex flex-row gap-2 h-full">
             <div class="border rounded-md bg-white flex-1 min-h-0 p-2 overflow-auto font-mono whitespace-pre-wrap" contenteditable="true" spellcheck="false" autocapitalize="off" autocorrect="off" data-gramm="false" id="plainText"></div>
-            <div class="border rounded-md bg-white flex-1 min-h-0 p-2 overflow-auto prose select-none" id="mdText"></div>
+            <div class="border rounded-md bg-white flex-1 p-2 overflow-auto select-none" id="mdContainer">
+                <div class="prose max-w-none w-full m-0 mx-auto" id="mdText"></div>
+            </div>
         </div>
     </div>
 
-    <button id="convertBtn" 
-        class="border rounded-md bg-white p-2 hover:bg-gray-300 active:bg-gray-400">
-        Convert
-    </button>
+    <div class="flex flex-row gap-2">
+            <button id="convertBtn" 
+                class="border rounded-md bg-white p-2 hover:bg-gray-300 active:bg-gray-400 flex-1">
+                Convert
+            </button>
+            <button id="copyBtn" 
+                class="border rounded-md bg-white p-2 hover:bg-gray-300 active:bg-gray-400 flex-1">
+                Copy Markdown
+            </button>
+    </div>
 </div>
 <script src="./src/main.js" type="module"></script>
 </body>
