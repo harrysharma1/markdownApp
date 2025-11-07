@@ -6,7 +6,9 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
 	"github.com/wailsapp/wails/v2/pkg/options/mac"
+	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
 //go:embed all:frontend/dist
@@ -18,9 +20,11 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "markdownApp",
-		Width:  1024,
-		Height: 768,
+		Title:     "markdownApp",
+		Width:     1024,
+		Height:    768,
+		MinWidth:  512,
+		MinHeight: 384,
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
 				TitlebarAppearsTransparent: false,
@@ -29,6 +33,16 @@ func main() {
 			},
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  true,
+		},
+		Windows: &windows.Options{
+			WebviewIsTransparent:              true,
+			WindowIsTranslucent:               true,
+			BackdropType:                      windows.Mica,
+			DisableFramelessWindowDecorations: true,
+			WebviewGpuIsDisabled:              false,
+		},
+		Linux: &linux.Options{
+			WindowIsTranslucent: true,
 		},
 
 		AssetServer: &assetserver.Options{
