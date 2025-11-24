@@ -17,13 +17,13 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - name: 'App'
+          - name: 'markdownApp'
             platform:  'linux/amd64'
             os: 'ubuntu-latest'
-          - name: 'App'
+          - name: 'markdownApp'
             platform:  'windows/amd64'
             os: 'windows-latest'
-          - name: 'App'
+          - name: 'markdownApp'
             platform:  'darwin/universal'
             os: 'macos-latest'
 
@@ -41,13 +41,12 @@ jobs:
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
           package: false
-          go-version: '1.23'
-          upload-artifacts: false  
+          go-version: '1.23' 
       
       - name: Upload Platform Artefacts
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ matrix.build.platform }}"
+          name: "${{ matrix.build.platform.replace('/', '-') }}"
           path: build/bin/*
   release:
     needs: build
